@@ -1,18 +1,25 @@
 {
   "name": "delilah",
   "version": "1.0.0",
-  "description": "\u0016Proyecto que plantea la creación de un sistema de pedidos online para un restaurante. Se debe montar un REST API para interactuar con la estructura de datos diseñada para el consumo del cliente.",
+  "description": "Proyecto que plantea la creación de un sistema de pedidos online para un restaurante. Se debe montar un REST API para interactuar con la estructura de datos diseñada para el consumo del cliente.",
   "main": "app.js",
   "dependencies": {
-    "express": "^4.17.1"
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.5"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Juansecod/DELILAH.git"
+    "url": "https://github.com/Juansecod/DELILAH.git"
   },
   "author": "Juansecode",
   "license": "MIT",
