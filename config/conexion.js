@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 // Se configura dotenv para tomar los datos del entorno de trabajo
-require('dotenv').config();
+require('dotenv').config({ path: '../config/.env' });
+if (!process.env.HOST) require('dotenv').config({ path: './config/.env' });
 const DB_USER = process.env.USER;
 const DB_PASSWORD = process.env.PASSWORD;
 const DB_HOST = process.env.HOST;
@@ -19,7 +20,7 @@ sequelize.authenticate()
     .then(() => {
         console.log('Conectado.');
     }).catch(err => {
-        console.error('Error de conexion:', err);
+        console.error('Error de conexion: ', err);
     });
 
 module.exports = sequelize;

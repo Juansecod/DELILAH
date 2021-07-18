@@ -4,6 +4,7 @@
   "description": "Proyecto que plantea la creación de un sistema de pedidos online para un restaurante. Se debe montar un REST API para interactuar con la estructura de datos diseñada para el consumo del cliente.",
   "main": "app.js",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
@@ -15,7 +16,8 @@
     "nodemon": "^2.0.12"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "startApp": "nodemon app.js" 
   },
   "repository": {
     "type": "git",

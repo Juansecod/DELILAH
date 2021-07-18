@@ -1,11 +1,11 @@
 -- -----------------------------------------------------
--- Schema delilah
+-- Esquema delilah
 -- -----------------------------------------------------
 CREATE SCHEMA IF NOT EXISTS `delilah` DEFAULT CHARACTER SET utf8 ;
 USE `delilah` ;
 
 -- -----------------------------------------------------
--- Table `delilah`.`roles`
+-- Tabla `delilah`.`roles`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delilah`.`roles` (
   `idRol` INT NOT NULL AUTO_INCREMENT,
@@ -15,7 +15,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `delilah`.`usuarios`
+-- Tabla `delilah`.`usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delilah`.`usuarios` (
   `idUsuario` INT NOT NULL AUTO_INCREMENT,
@@ -38,7 +38,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `delilah`.`productos`
+-- Tabla `delilah`.`productos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delilah`.`productos` (
   `idProducto` INT NOT NULL AUTO_INCREMENT,
@@ -52,7 +52,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `delilah`.`metodosPago`
+-- Tabla `delilah`.`metodosPago`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delilah`.`metodosPago` (
   `idMetodoPago` INT NOT NULL,
@@ -62,7 +62,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `delilah`.`estados`
+-- Tabla `delilah`.`estados`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delilah`.`estados` (
   `idEstado` INT NOT NULL,
@@ -72,7 +72,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `delilah`.`pedidos`
+-- Tabla `delilah`.`pedidos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delilah`.`pedidos` (
   `idPedido` INT NOT NULL AUTO_INCREMENT,
@@ -105,7 +105,7 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `delilah`.`encargo`
+-- Tabla `delilah`.`encargo`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delilah`.`encargo` (
   `idEncargo` INT NOT NULL AUTO_INCREMENT,
@@ -127,6 +127,8 @@ CREATE TABLE IF NOT EXISTS `delilah`.`encargo` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-
-
-
+-- -----------------------------------------------------
+-- Se inserta el rol admin(SUPERUSUARIO) y cliente
+-- -----------------------------------------------------
+insert into roles(nombreRol) values ('admin');
+insert into roles(nombreRol) values ('cliente');
