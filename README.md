@@ -64,7 +64,7 @@
 
 ![image](https://user-images.githubusercontent.com/62673626/126071839-c7cae8f8-4a99-412e-90a7-3cb5c18d158b.png)
 
-Este proyecto plantea la creación de un sistema de pedidos online para un restaurante. Deberás poner en funcionamiento las partes necesarias para montar una REST API que permita realizar altas, bajas, modi?caciones y obtención de información sobre una estructura de datos que podría consumir un cliente. Parte del desafío estará enfocado en lograr que el desarrollo del proyecto sea puesto en producción utilizando web services.
+Este proyecto plantea la creación de un sistema de pedidos online para un restaurante. Deberás poner en funcionamiento las partes necesarias para montar una REST API que permita realizar altas, bajas, modificaciones y obtención de información sobre una estructura de datos que podría consumir un cliente. Parte del desafío estará enfocado en lograr que el desarrollo del proyecto sea puesto en producción utilizando web services.
 
 En conclucion, se creara el backend para un sistema de pedidos online para un restaurante poniendo en funcionamiento las partes necesarias para montar una REST API que permita realizar operaciones CRUD sobre una estructura de datos.
 
@@ -90,22 +90,22 @@ Para poder utilizar este proyecto sin nungun problema necesitamos contar con las
   npm install npm@latest -g
   ```
  * Gestor de base de datos (en este caso utilizaremos [MariaDB](https://www.mariadbtutorial.com/getting-started/install-mariadb/))
- * Un editor de texto o IDE, ya sea Visual Studio Code o el de su preferencia
+ * Un editor de texto o IDE, ya sea [Visual Studio Code](https://code.visualstudio.com/download) o el de su preferencia
  * Herramienta para realizar peticiones a nuestra API (en este caso utilizaremos [Postman](https://learning.postman.com/docs/getting-started/installation-and-updates/)).
  * Cliente para el gestor de base de datos, en este caso usamos [DBeaver](https://dbeaver.io/download/)
 
 ### 🤯Instalacion
 
-1. Clona el repositorio en tu maquina
+1. Clona el repositorio en tu maquina, para esto abrimos git bash y pegamos el siguiente comando(Tambien es valido descargar el archivo .zip y extraerlo)
    ```sh
    git clone https://github.com/Juansecod/DELILAH.git
    ```
-2. Nos paramos sobre nuestra carpeta en guardamos el proyecto
+2. Nos paramos sobre la carpeta del proyecto
 3. Importamos la base de datos en nuestro cliente gestor de bases de datos con el archivo ".sql" (https://www.digitalocean.com/community/tutorials/how-to-import-and-export-databases-in-mysql-or-mariadb)
-4. Instalamos los paquetes con npm
+4. Instalamos los paquetes con npm, abrimos la consola y pegamos el siquiente comando:
    ```sh
    npm install
-4. Creamos dentro de la carpeta config un archivo `.env` (Es de suma importancia para crear todo el entorno de trabajo)
+4. Creamos dentro de la carpeta `config` creamos un archivo llamado `.env` (Es de suma importancia para crear todo el entorno de trabajo)
 5. Dentro de este archivo vamos a realizar la siguiente configuracion:
     ![image](https://user-images.githubusercontent.com/62673626/126071471-237bc31c-90fc-4588-9593-8d8ee7c82e03.png)
 6. Ya reemplazados los datos de nuestro gestor de base de datos, copie y pegue las siguientes variables para el correcto funcionamiento del programa
@@ -127,7 +127,7 @@ Una vez iniciada a API, comenzamos a realizar peticion a nuestro servidor que ac
 
 ### 🕴Postman
 Ejemplo de la petición mostrar productos (path= "/products")
-  - Seleccionamos el metodo GET.
+  - Seleccionamos el metodo "GET".
   - En la url agregamos la ruta con el path(ruta) que queremos usar(El path global viene a ser el siguiente: "localhost:3000/api/v1", y a este le agregamos el path que vamos a usar: "/products", como observamos en la foto con un color rojo)
   - Realizado este proceso con solo darle enviar nos respondera con el codigo 200(color verde) y una objeto donde nos muestra todos los productos que estan registrados en nuestra base de datos(cuadro azul)
 ![image](https://user-images.githubusercontent.com/62673626/126074943-fd6a9a50-aa6a-4994-b3ed-c83be358f54a.png)
@@ -148,6 +148,14 @@ Ejemplo de la petición iniciar sesion (path= "/users/login")
   - Y finalizado el llenado del formulario, enviamos los datos, y nos  responderá con el código 200 en caso de haber ingresado bien los datos.
   - Por ultimo, para mantener la sesion iniciada por 1 hora, guardamos el token(cuadro Blanco) y lo vamos a usar para realizar otras peticiones como actualizar nuestros datos o realizar pedidos.
 ![image](https://user-images.githubusercontent.com/62673626/126075493-f7df96b4-7ec3-4032-beff-ed26c8474aff.png)
+
+Ejemplo de la peticion mostrar usuario registrados, exclusivo para usuarios administradores (path= "/users/")
+  - Seleccionamos el metodo "GET" como en el primer ejemplo.
+  - Realizamos el mismo procedimiento de agregar el path que queremos usar: `localhost:3000/api/v1/users/login`
+  - En esta peticion requerimos del envio del token para validar la sesion con el token que nos daba en el ejemplo anterior. Para ello, buscaremos el apartado Authorization(color naranja) y seleccionamos el tipo de API key(cuadro rojo)
+  - Luego llenamos los campos key y token, aca es importante no ingresar algun dato incorrecto, esto debido a que si ocurre un error no nos dara acceso a la peticion. En el campo key ingrezamos la para `authorization`(subrayado amarillo) y en el campo value ingresamos la key que nos retorno la API en el ejemplo anterior(subrayado verde)
+  ![image](https://user-images.githubusercontent.com/62673626/126094597-403d6da1-3bbe-4781-b9b7-03cb440f4611.png)
+  - En caso de ser exitoso la autorizacion de acceso nos retornara una lista con los datos de todos los usuarios registrados.
 
 _Para mas ejemplos, por favor importar el archivo spec.yml en [swagger](https://editor.swagger.io) para una mejor comprencion del uso de la API_
 
