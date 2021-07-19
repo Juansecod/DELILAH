@@ -8,8 +8,8 @@ const signupUser = async (req, res) => {
     const { nombreUsuario, nombreCompleto, correo, telefono, direccion} = req.body;
     var { contrasena } = req.body;
     try {
-    	contrasena = bcrypt.hashSync(contrasena, 10);
-        const resultInsertUser = await sequelize.query(`INSERT INTO usuarios(nombreUsuario, nombreCompleto, correo, telefono, direccion, contrasena, roles_idRol)  
+    	contrasena = await bcrypt.hashSync(contrasena, 10);
+        const resultInsertUser = await sequelize.query(`INSERT INTO usuarios(nombreUsuario, nombreCompleto, correo, telefono, direccion, contrasena, idRol)  
         	VALUES('${nombreUsuario}', '${nombreCompleto}', '${correo}', '${telefono}', '${direccion}', '${contrasena}', 2);`,
         	{ type: sequelize.QueryTypes.INSERT });
 
@@ -19,7 +19,6 @@ const signupUser = async (req, res) => {
         })
 
     } catch (error) {
-    	console.log(error)
         errorResponse(res,error);
     }
 };
@@ -27,14 +26,14 @@ const signupUser = async (req, res) => {
 const loginUser = async (req, res) => {    
     const { usuario_mail, contrasena} = req.body;    
     try {    
-        const result = await sequelize.query(`select idUsuario, roles_idRol, nombreCompleto, contrasena from usuarios u 
+        const result = await sequelize.query(`select idUsuario, idRol, nombreCompleto, contrasena from usuarios u 
                             where (correo = '${usuario_mail}' or nombreUsuario = '${usuario_mail}') 
                              limit 1;`,
                             { type: sequelize.QueryTypes.SELECT });
         if (result == '') throw new Error('404');
     	const token = await bcrypt.compare(contrasena, result[0].contrasena).then((authorization) => {
 			if(authorization){
-				const jwtToken = jwt.sign({'idUsuario': result[0].idUsuario, 'idRol':result[0].roles_idRol}, 
+				const jwtToken = jwt.sign({'idUsuario': result[0].idUsuario, 'idRol':result[0].idRol}, 
                                     process.env.KEY_TOKEN, { expiresIn: process.env.EXPIRES });
         		return jwtToken;
 			}else{
@@ -47,18 +46,15 @@ const loginUser = async (req, res) => {
 	        'token': token
 	    });
     } catch (error) {
-    	console.log(error)
         errorResponse(res, error);
     }    
 };
 
 const getUser = async (req, res) => {
-    //console.log(req.decoded)
     try {
         const result = await sequelize.query(`SELECT nombreUsuario, nombreCompleto, correo, telefono, direccion FROM usuarios 
                             ${condicionalSQL(req)}`, 
                             {type:sequelize.QueryTypes.SELECT});
-        //console.log(result)
         return res.status(200).json({
             'msg': true,
             'data':result
@@ -84,7 +80,7 @@ const updateUser = async (req, res) => {
 		let resultUpdate = await sequelize.query(`${sentenciaSQL};`,
 	        { type: sequelize.QueryTypes.UPDATE });
 
-		if(!resultUpdate) throw new Error();
+		if(resultUpdate[1] == 0) throw new Error('400');
 		
 		return res.status(201).json({
 	            'msg': true,
@@ -100,33 +96,36 @@ const updatePassword = async (req, res) => {
 		const { idUsuario } = req.decoded;
 		const { claveDinamica } = req.body;
 		let { nuevaContrasena } = req.body;
-		nuevaContrasena = await bcrypt.hashSync(nuevaContrasena, 10);
         const result = await sequelize.query(`SELECT contrasena FROM usuarios WHERE idUsuario = ${idUsuario};`,
                             { type: sequelize.QueryTypes.SELECT });
         if (result == '') throw new Error('404');
-			if(typeof(claveDinamica) == 'number'){
-				const resultUpdate = sequelize.query(`UPDATE usuarios SET contrasena = '${nuevaContrasena}' 
+    	response = await bcrypt.compare(nuevaContrasena, result[0].contrasena).then(async(authorization)=>{
+    		if(authorization) return '400'
+    		nuevaContrasena = await bcrypt.hashSync(nuevaContrasena, 10);
+    		if(typeof(claveDinamica) == 'number'){
+				const resultUpdate = await sequelize.query(`UPDATE usuarios SET contrasena = '${nuevaContrasena}' 
 					WHERE idUsuario = ${idUsuario}`, { type: sequelize.QueryTypes.UPDATE });
+				return 'ok'
 			}else{
-				throw new Error('400');
+				return '400';
 			}
-		return res.status(200).json( {
+    	});	
+		if(response == 'ok') return res.status(200).json( {
 	        'msg': true,
 	        'data': `Se ha actualizado exitosamente la contraseña`,
 	    });
+		throw new Error(response);
     } catch (error) {
-    	console.log(error)
         errorResponse(res, error);
     }
 }
 
 const deleteUser = async(req, res) =>{
-	const { contrasena } = req.headers['contrasena'];
+	const contrasena = req.headers['contrasena'];
 	try {
         const result = await sequelize.query(`SELECT contrasena FROM usuarios 
                             ${condicionalSQL(req)}`, 
                             { type: sequelize.QueryTypes.SELECT });
-   
         const resultDelete = await bcrypt.compare(contrasena, result[0].contrasena).then(async(authorization) => {
         	if(authorization){
 				const result = await sequelize.query(`DELETE FROM usuarios ${condicionalSQL(req)}`,
@@ -148,9 +147,9 @@ const updateRol = async(req, res) => {
 	const {idUsuario} = req.params;
 	const {idRol} = req.query;
 	try{
-		const resultUpdate = await sequelize.query(`UPDATE usuarios SET roles_idRol = ${idRol} WHERE idUsuario = ${idUsuario}`, 
+		const resultUpdate = await sequelize.query(`UPDATE usuarios SET idRol = ${idRol} WHERE idUsuario = ${idUsuario}`, 
 			{ type: sequelize.QueryTypes.UPDATE});
-		if(!resultUpdate) throw new Error();
+		if(resultUpdate[1] == 0) throw new Error('400');
 		return res.status(201).json({
 	            'msg': true,
 	            'data': `Usuario actualizado con exito`

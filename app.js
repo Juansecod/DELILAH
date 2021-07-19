@@ -9,10 +9,10 @@ const path = `/api/v1`;
 // Configuracion inicial para tener un usuario administrativo por defecto, se recomienda el cambio de contraseña al ingresarlo, o eliminarlo pero 
 const inicializacion = async(sequelize) => {
     try {
-        const result = await sequelize.query('SELECT nombreUsuario, nombreCompleto, correo, telefono, direccion FROM usuarios WHERE roles_idRol = 1', 
+        const result = await sequelize.query('SELECT nombreUsuario, nombreCompleto, correo, telefono, direccion FROM usuarios WHERE idRol = 1', 
             {type:sequelize.QueryTypes.SELECT});
         if(!result[0]) {
-            sequelize.query(`INSERT INTO usuarios(nombreUsuario, nombreCompleto, correo, telefono, direccion, contrasena, roles_idRol)  
+            sequelize.query(`INSERT INTO usuarios(nombreUsuario, nombreCompleto, correo, telefono, direccion, contrasena, idRol)  
                 VALUES('admin', '', '', '', '', '${bcrypt.hashSync('admin', 10)}', 1);`,
                 { type: sequelize.QueryTypes.INSERT });
             console.log(' ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------');
@@ -33,7 +33,7 @@ inicializacion(sequelize);
 // Routes
 const usersRoutes = require('./routers/users.routes.js');
 const productsRoutes = require('./routers/products.routes.js');
-
+const ordersRoutes = require('./routers/orders.routes.js');
 
 
 // Middleware Globales
@@ -43,6 +43,7 @@ app.use(cors());
 // Routes use
 app.use(`${path}/users`, usersRoutes);
 app.use(`${path}/products`, productsRoutes);
+app.use(`${path}/orders`, ordersRoutes);
 
 // Server
 app.listen(port, () => {

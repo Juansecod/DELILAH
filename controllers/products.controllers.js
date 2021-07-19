@@ -7,7 +7,6 @@ const registerProduct = async (req, res) => {
     try{
         const result = await sequelize.query(`INSERT INTO productos(codigoProducto, nombreProducto, descripcion, precio) VALUES('${codigo}', '${nombre}', '${descripcion}', ${precio});`,
         		{ type: sequelize.QueryTypes.INSERT });
-        console.log(result);
         return res.status(201).json({
             'msg': true,
             'data': `El producto: ${nombre}, ha sido registrado exitosamente`
@@ -19,7 +18,10 @@ const registerProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
 	const { codigo, nombre, descripcion, precio } = req.body;
+	let result = await sequelize.query(`SELECT * FROM productos${condicionalSQL(req)};`,
+	        { type: sequelize.QueryTypes.SELECT });
 	try{
+		if(!result[0]) throw new Error('404');
 		let sql = `UPDATE productos SET`;
 		let valores = "";
 		if (codigo != undefined) valores = valores + ` codigoProducto = '${codigo}'`;
@@ -30,7 +32,7 @@ const updateProduct = async (req, res) => {
 		const sentenciaSQL = sql + valores + condicionalSQL(req);
 		let resultUpdate = await sequelize.query(`${sentenciaSQL};`,
 	        { type: sequelize.QueryTypes.UPDATE });
-		if(!resultUpdate) throw new Error();
+		if(resultUpdate[1] == 0) throw new Error('400');
 		return res.status(201).json({
 	            'msg': true,
 	            'data': `Producto actualizado con exito`
@@ -71,11 +73,11 @@ const getProducts = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
 	const { codigo } = req.query
-	console.log(`DELETE FROM productos ${condicionalSQL(req)} and codigoProducto = ${codigo}`);
 	try {
-		const query = await sequelize.query(`SELECT nombreProducto FROM productos ${condicionalSQL(req)} and codigoProducto = '${codigo}';`,
+		const query = await sequelize.query(`SELECT codigoProducto FROM productos ${condicionalSQL(req)};`,
 			{ type: sequelize.QueryTypes.SELECT });
 		if(!query[0]) throw new Error('404');
+		if(query[0].codigoProducto !== codigo) throw new Error('400');
 		const result = await sequelize.query(`DELETE FROM productos ${condicionalSQL(req)} and codigoProducto = '${codigo}';`,
 			{ type: sequelize.QueryTypes.DELETE });
 		return res.status(200).json( {
@@ -83,7 +85,6 @@ const deleteProduct = async (req, res) => {
 	        'data': `Producto eliminado con exito`
 	    });
     } catch (error) {
-    	console.log(error);
         errorResponse(res, error);
     }
 }

@@ -13,6 +13,10 @@ CREATE TABLE IF NOT EXISTS `delilah`.`roles` (
   PRIMARY KEY (`idRol`))
 ENGINE = InnoDB;
 
+-- -----------------------------------------------------
+-- Se inserta el rol admin(SUPERUSUARIO) y cliente
+-- -----------------------------------------------------
+insert into roles(nombreRol) values ('admin'),('cliente');
 
 -- -----------------------------------------------------
 -- Tabla `delilah`.`usuarios`
@@ -25,12 +29,12 @@ CREATE TABLE IF NOT EXISTS `delilah`.`usuarios` (
   `telefono` VARCHAR(15) NULL,
   `direccion` VARCHAR(255) NULL,
   `contrasena` VARCHAR(255) NOT NULL,
-  `roles_idRol` INT NOT NULL,
-  PRIMARY KEY (`idUsuario`, `roles_idRol`),
+  `idRol` INT NOT NULL,
+  PRIMARY KEY (`idUsuario`, `idRol`),
   UNIQUE INDEX `username_UNIQUE` (`nombreUsuario` ASC) VISIBLE,
-  INDEX `fk_usuarios_roles1_idx` (`roles_idRol` ASC) VISIBLE,
+  INDEX `fk_usuarios_roles1_idx` (`idRol` ASC) VISIBLE,
   CONSTRAINT `fk_usuarios_roles1`
-    FOREIGN KEY (`roles_idRol`)
+    FOREIGN KEY (`idRol`)
     REFERENCES `delilah`.`roles` (`idRol`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
@@ -55,21 +59,19 @@ ENGINE = InnoDB;
 -- Tabla `delilah`.`metodosPago`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delilah`.`metodosPago` (
-  `idMetodoPago` INT NOT NULL,
+  `idMetodoPago` INT NOT NULL AUTO_INCREMENT,
   `nombreMetodo` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idMetodoPago`))
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Tabla `delilah`.`estados`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delilah`.`estados` (
-  `idEstado` INT NOT NULL,
+  `idEstado` INT NOT NULL AUTO_INCREMENT,
   `nombreEstado` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`idEstado`))
 ENGINE = InnoDB;
-
 
 -- -----------------------------------------------------
 -- Tabla `delilah`.`pedidos`
@@ -79,7 +81,6 @@ CREATE TABLE IF NOT EXISTS `delilah`.`pedidos` (
   `idUsuario` INT NOT NULL,
   `idMetodoPago` INT NOT NULL,
   `idEstado` INT NOT NULL,
-  `numeroPedido` INT NOT NULL,
   `fechaPedido` TIMESTAMP DEFAULT now(),
   `valorTotal` INT NOT NULL,
   PRIMARY KEY (`idPedido`),
@@ -105,30 +106,31 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Tabla `delilah`.`encargo`
+-- Tabla `delilah`.`encargos`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `delilah`.`encargo` (
+CREATE TABLE IF NOT EXISTS `delilah`.`encargos` (
   `idEncargo` INT NOT NULL AUTO_INCREMENT,
-  `pedidos_idPedido` INT NOT NULL,
-  `productos_idProducto` INT NOT NULL,
+  `idPedido` INT NOT NULL,
+  `idProducto` INT NOT NULL,
   `cantidad` INT NULL DEFAULT 1,
   PRIMARY KEY (`idEncargo`),
-  INDEX `fk_pedidos_has_productos_productos1_idx` (`productos_idProducto` ASC) VISIBLE,
-  INDEX `fk_pedidos_has_productos_pedidos1_idx` (`pedidos_idPedido` ASC) VISIBLE,
+  INDEX `fk_pedidos_has_productos_productos1_idx` (`idProducto` ASC) VISIBLE,
+  INDEX `fk_pedidos_has_productos_pedidos1_idx` (`idPedido` ASC) VISIBLE,
   CONSTRAINT `fk_pedidos_has_productos_pedidos1`
-    FOREIGN KEY (`pedidos_idPedido`)
+    FOREIGN KEY (`idPedido`)
     REFERENCES `delilah`.`pedidos` (`idPedido`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_pedidos_has_productos_productos1`
-    FOREIGN KEY (`productos_idProducto`)
+    FOREIGN KEY (`idProducto`)
     REFERENCES `delilah`.`productos` (`idProducto`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 -- -----------------------------------------------------
--- Se inserta el rol admin(SUPERUSUARIO) y cliente
+-- Se inserta estados de pedido y metodos de pago por 
+--                    defecto
 -- -----------------------------------------------------
-insert into roles(nombreRol) values ('admin');
-insert into roles(nombreRol) values ('cliente');
+insert into estados(nombreEstado) values('nuevo'),('confirmado'),('preparando'),('enviando'),('cancelado'),('entregado');
+insert into metodosPago(nombreMetodo) values ('efectivo'),('tarjeta');

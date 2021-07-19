@@ -1,0 +1,771 @@
+openapi: 3.0.0
+info:
+  description: |
+    Proyecto que plantea la creación de un sistema de pedidos online para un restaurante. Se debe montar un REST API para interactuar con la estructura de datos diseñada para el consumo del cliente.
+  version: "1.0.0"
+  title: Delilah resto API
+  contact:
+    name: Juansecode
+    email: "juan.sebastianri28@gmail.com"
+  license:
+    name: "MIT License"
+    url: "https://github.com/Juansecod/DELILAH/blob/main/LICENSE"
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: Servidor local generado por la misma API
+    url: http://localhost:3000/api/v1
+tags:
+  - name: usuario
+    description: Operaciones acerca del usuario
+  - name: usuario(Admin)
+    description: Operaciones solo disponibles para administradores
+  - name: producto
+    description: Operationes de un usuario (Tanto administrador como cliente) sobre los productos
+  - name: producto(Admin)
+    description: Operaciones de los administradores sobre los productos (Solo usuarios administrativos)
+  - name: pedido
+    description: Operaciones para pedir productos
+paths:
+  /users/signup:
+    post:
+      tags:
+        - usuario
+      summary: Registrar Usuario
+      description: Se agrega el usuario a la base datos, permitiendo su loggeo e interaccion con los productos
+      operationId: crearUsuario
+      responses:
+        "201":
+          description: Operacion realizada con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: Se ha cometido un error en el procedimiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuario"
+        description: Datos para la creacion de un nuevo usuario
+        required: true
+  /users/login:
+    post:
+      tags:
+        - usuario
+      summary: Loggeo en el sistema de un usuario
+      operationId: loginUsuario
+      responses:
+        "200":
+          description: Operacion realizada con exito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: boolean
+                  data:
+                    type: string
+                  token:
+                    type: string
+        "400":
+          description: Se ha cometido un error en el procedimiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "404":
+          description: Usuario no encontrado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                usuario_mail:
+                  type: string
+                contrasena:
+                  type: string
+        description: Datos de inicio de sesion
+        required: true
+  /users/user:
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - usuario
+      summary: Muestra informacion del usuario de la sesion activa
+      operationId: userInfo
+      responses:
+        "200":
+          description: Operacion completada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: boolean
+                  data:
+                    type: array
+                    items: 
+                      type: object
+                      properties:
+                        nombreUsuario:
+                          type: string
+                        nombreCompleto:
+                          type: string
+                        correo:
+                          type: string
+                        telefono: 
+                          type: string
+                        direccion: 
+                          type: string
+        "400":
+          description: Ha ocurrido un error al realizar la operacion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "401":
+          description: No esta autorizado para esta operacion
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  /users/update:
+    put:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - usuario
+      summary: Actualizar Usuario
+      description: Se actualiza los datos de un usuario en la base de datos
+      operationId: actualizarUsuario             
+      responses:
+        "201":
+          description: Operacion realizada con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: Se ha cometido un error en el procedimiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nombreCompleto:
+                  type: string
+                correo: 
+                  type: string
+                telefono:
+                  type: string
+                direccion:
+                  type: string
+        description: Datos para actualizar en la base de datos (Solo es requerido un campo)
+        required: true
+  /users/updatePassword:
+    put:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - usuario
+      summary: Actualizar Contraseña de un Usuario
+      description: Se actualiza la contraseña de un usuario en la base de datos
+      operationId: actualizarContrasena             
+      responses:
+        "201":
+          description: Operacion realizada con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: Se ha cometido un error en el procedimiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                claveDinamica:
+                  type: integer
+                nuevaContrasena: 
+                  type: string
+        description: En este caso se ingresa cualquier numero para simular una clave dinamica al actualizar la contraseña.
+        required: true
+  /users/delete:
+    delete:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - usuario
+      summary: Eliminar Usuario
+      description: Se elimina los datos de un usuario en la base de datos
+      operationId: eliminarUsuario 
+      responses:
+        "200":
+          description: Se ha borrado con exito el usuario
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: Se ha cometido un error en el procedimiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+      parameters:
+        - name: contrasena
+          in: header
+          description: Contraseña para verificar la identidad del usuario
+          required: true
+          schema:
+            type: string
+  
+  /users:
+    get:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - usuario(Admin)
+      summary: Mostrar todos los usuarios
+      description:  Se muestra todos los usuarios registrados siempre y cuando el usuario loggeado sea administrador
+      operationId: mostrarUsuarios
+      responses:
+        "200":
+          description: Operacion realizada con exito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: boolean
+                  data:
+                    type: object
+                    properties:
+                      usuario:
+                        $ref: "#/components/schemas/Usuario"
+        "400":
+          description: Se ha cometido un error en el procedimiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "401":
+          description: Acceso denegado
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  /users/updateRol/{idUsuario}:
+    put:
+      security:
+        - ApiKeyAuth: []
+      tags:
+        - usuario(Admin)
+      summary: Actualizar Rol del Usuario
+      description: Se actualiza el rol de un usuario en la base de datos (Solo los administradores tienen acceso a esta operacion)
+      operationId: actualizarRolUsuario 
+      parameters:
+        - name: idUsuario
+          in: path
+          description: El id del usuario a actualizar en la base de datos
+          required: true
+          schema:
+            type: integer
+        - name: idRol
+          in: query
+          description: El id del Rol para actualizar al rol deseado en la base de datos
+          required: true
+          schema:
+            type: integer
+      responses:
+        "201":
+          description: Operacion realizada con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: Se ha cometido un error en el procedimiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+    
+  /products:
+    get:
+      tags:
+        - producto
+      summary: Muestra todos los productos registrados en el sistema
+      operationId: mostrarProductos
+      responses:
+        "200":
+          description: Operacion completada con exito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Producto'
+        "204":
+          description: Se ha completado la operacion pero no hay datos registrados.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: Ha ocurrido un error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  /products/{idProducto}:
+    get:
+      tags: 
+      - producto
+      summary: Muestra un producto especifico mediante su Id
+      operationId: mostrarProducto
+      parameters:
+        - name: idProducto
+          in: path
+          description: El id del producto a mostrar desde la base de datos
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Operacion completada con exito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                  data:
+                    $ref: '#/components/schemas/Producto'
+        "400":
+          description: Ha ocurrido un error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "404":
+          description: Producto no encontrado.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+      
+    
+  /products/register:
+    post:
+      tags:
+        - producto(Admin)
+      security:
+        - ApiKeyAuth: []
+      summary: Crear un nuevo producto
+      description: Registro de un nuevo producto en la base de datos
+      operationId: crearProducto
+      responses:
+        "201":
+          description: Producto creado con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: Ocurrio un error al registrar. Revisar los datos ingresados e intentar de nuevo
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Producto"
+        description: Datos para la creacion de un nuevo producto
+        required: true
+  /products/{idProducto}/update:
+    put:
+      tags:
+      - producto(Admin)
+      security:
+        - ApiKeyAuth: []
+      summary: Actulalizacion de un producto
+      description: Actualizacion de un nuevo producto ya existente en la base de datos
+      operationId: actualizarProducto
+      parameters:
+        - name: idProducto
+          in: path
+          description: El id del producto es requerido para realizar la consulta y actualizarlo
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Producto"
+        description: Datos para actualizar en la base de datos (Solo es requerido un campo)
+        required: true
+      responses:
+        "201":
+          description: "Actualizacion exitosa"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: "Ha ocurrido un error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  /products/{idProducto}/delete:
+    delete:
+      tags:
+      - producto(Admin)
+      security:
+        - ApiKeyAuth: []
+      summary: Eliminacion de un producto
+      description: Eliminacion de un producto de la base de datos
+      operationId: eliminarProducto
+      parameters:
+        - name: idProducto
+          in: path
+          description: Id requerido para la buscar el producto y eliminarlo
+          required: true
+          schema:
+            type: integer
+        - name: codigo
+          in: query
+          description: Se utiliza el codigo del producto para evitar errores y reftificar la correcta eliminacion del mismo
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: "Producto eliminado con exito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: "Ha ocurrido un error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "404":
+          description: "Producto no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+                  
+                  
+
+  /orders/newOrder:
+    post:
+      tags:
+        - pedido
+      security:
+        - ApiKeyAuth: []
+      summary: Crea un pedido al restaurante
+      description: Permite registrar en la base de datos el pedido del cliente
+      operationId: crearPedido
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idMetodoPago:
+                  type: integer
+                productos:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      idProducto:
+                        type: integer
+                      cantidad:
+                        type: integer
+      responses:
+        "201":
+          description: Operacion completada
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: Se ha cometido un error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  /orders/{idPedido}:
+    get:
+      tags:
+        - pedido
+      security:
+        - ApiKeyAuth: []
+      summary: Muestra las caracteristicas de un pedido mediante su id
+      description: Caracteristica enfocada para los clientes para mirar detalles de sus pedidos
+      operationId: getOrdersByIdClient
+      parameters:
+        - name: idPedido
+          in: path
+          required: true
+          description: Id del pedido para consultar en la base de datos
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Busqueda realizada con exito"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/Pedido"
+        "400":
+          description: "Ha ocurrido un error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "404":
+          description: "Pedido no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  /orders:
+    get:
+      tags:
+        - pedido
+      security:
+        - ApiKeyAuth: []
+      summary: Mostrar todos los pedidos realizados por el cliente
+      description: Muestra los pedidos realizados por el cliente, en caso de ser administrador te muestra todos los pedidos realizados en la API
+      operationId: getOrders
+      responses:
+        "200":
+            description: "Producto eliminado con exito"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/API_Response"
+        "400":
+          description: "Ha ocurrido un error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  /orders/{idPedido}/cancel:
+    put:
+      tags:
+        - pedido
+      security:
+        - ApiKeyAuth: []
+      summary: Cancelar el pedido
+      description: Cancela el pedido hecho por el cliente sin necesidad de un administrador
+      operationId: cancelOrder
+      parameters:
+        - name: idPedido
+          in: path
+          required: true
+          description: Id del pedido a cancelar 
+          schema:
+            type: integer
+      responses:
+        "201":
+            description: "Pedido cancelado exitosamente"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/API_Response"
+        "400":
+          description: "Ha ocurrido un error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  
+  /orders/admin/{idPedido}:
+    get:
+      tags:
+        - pedido
+      security:
+        - ApiKeyAuth: []
+      summary: Muestra las caracteristicas de un pedido mediante su id
+      description: Caracteristica exclusiva para los administradores
+      operationId: getOrdersById
+      parameters:
+        - name: idPedido
+          in: path
+          required: true
+          description: Id del pedido para consultar en la base de datos
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Busqueda realizada con exito"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  msg:
+                    type: string
+                  data:
+                    $ref: "#/components/schemas/Pedido"
+        "400":
+          description: "Ha ocurrido un error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "404":
+          description: "Pedido no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+    put:
+        tags:
+          - pedido
+        security:
+          - ApiKeyAuth: []
+        summary: Actualizar estado del pedido
+        description: El administrador actualiza el estado en el que se encuentra el pedido
+        operationId: updateState
+        parameters:
+          - name: idPedido
+            in: path
+            required: true
+            description: Id del pedido a cancelar 
+            schema:
+              type: integer
+        requestBody:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  idEstado:
+                    type: integer
+        responses:
+          "201":
+              description: "Pedido actualizado exitosamente"
+              content:
+                application/json:
+                  schema:
+                    $ref: "#/components/schemas/API_Response"
+          "400":
+            description: "Ha ocurrido un error"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/API_Response"
+  
+  
+components:
+  schemas:
+    Usuario:
+      type: object
+      properties:
+        nombreUsuario:
+          type: string
+        nombreCompleto:
+          type: string
+        correo:
+          type: string
+        telefono:
+          type: string
+        direccion:
+          type: string
+        contrasena:
+          type: string
+    Producto:
+      type: object
+      properties:
+        codigo:
+          type: string
+        nombre:
+          type: string
+        descripcion:
+          type: string
+        precio:
+          type: integer
+    Pedido:
+      type: object
+      properties:
+        idEstado:
+          type: integer
+        idMetodoPago:
+          type: integer
+        idUsuario:
+          type: integer
+        fechaPedido:
+          type: string
+        total:
+          type: integer
+    API_Response:
+      type: object
+      properties:
+        msg:
+          type: boolean
+        data: 
+          type: string
+  requestBodies:
+    UserArray:
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: "#/components/schemas/Usuario"
+      description: List of user object
+      required: true
+  securitySchemes:
+    ApiKeyAuth:        
+      type: apiKey
+      in: header       
+      name: authorization
+externalDocs:
+  description: Visita el repositorio y descarga la API REST para probarla
+  url: "https://github.com/Juansecod/DELILAH"

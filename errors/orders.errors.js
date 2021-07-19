@@ -1,7 +1,7 @@
-const errorResponseProduct = (res, error) => {
+const errorResponseOrder = (res, error) => {
     if(error.message == '204') return res.status(204).json( {
         'msg': false,
-        'data': 'No hay productos aun registrados.'
+        'data': 'No hay ordenes registrados.'
     });
 
     if(error.message == '404') return res.status(404).json( {
@@ -25,4 +25,4 @@ const errorResponseProduct = (res, error) => {
     });
 }
 
-module.exports = errorResponseProduct;
+module.exports = errorResponseOrder;

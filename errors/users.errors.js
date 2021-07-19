@@ -15,7 +15,6 @@ const errorResponseUser = (res, error) => {
         'data': 'No Autorizado'
     });
 
-    console.log(error)
     return res.status(400).json({
         'msg': false,
         'data': 'Ups! Algo ha salido mal.'

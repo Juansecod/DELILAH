@@ -26,9 +26,7 @@ const validationAdmin = ((req, res, next) => {
     try{
         if (token) {
             jwt.verify(token, process.env.KEY_TOKEN, (err, decoded) => {
-                if (err) {
-                    throw new Error();
-                } else if (decoded.idRol != 1) {
+                if (decoded.idRol != 1) {
                     throw new Error('401');
                 } else {
                     req.decoded = decoded;
@@ -36,7 +34,7 @@ const validationAdmin = ((req, res, next) => {
                 }
             });
         } else {
-            throw new Error(400);
+            throw new Error('400');
         }
     }catch(error){
         return errorResponse(res, error);

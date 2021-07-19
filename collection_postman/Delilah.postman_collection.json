@@ -1,0 +1,803 @@
+{
+	"info": {
+		"_postman_id": "dc4b8a66-cf7d-4c3c-9e84-95375442e735",
+		"name": "Delilah",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "usuario",
+			"item": [
+				{
+					"name": "api/v1/users - Registro cliente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombreUsuario\": \"root\", \r\n    \"nombreCompleto\": \"root\", \r\n    \"correo\": \"root@mail.com\", \r\n    \"telefono\": \"+1 root\", \r\n    \"direccion\": \"direccion root\",\r\n    \"contrasena\": \"root2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/users/signup",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/users/login - Inicio de Sesion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"usuario_mail\": \"admin\",\r\n    \"contrasena\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/users/login",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/users/user - Info del Usuario con sesion activa",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjUsImlkUm9sIjoxLCJpYXQiOjE2MjY1OTQyNjIsImV4cCI6MTYyNjU5Nzg2Mn0.1SUEleq6AQRDLGLpv9GbPKrOUJlJjUk0qu5NoeXL00w",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjMsImlkUm9sIjoyLCJpYXQiOjE2MjY1NTcwNTUsImV4cCI6MTYyNjU2MDY1NX0.y1BJ3vxOpvaK6EzNQ9TJmH9U2ogV3FU2WtY6gHwcogo",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "localhost:3000/api/v1/users/user",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/users/ - Info de todos los usuarios registrados",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjUsImlkUm9sIjoxLCJpYXQiOjE2MjY1NzgyMzIsImV4cCI6MTYyNjU4MTgzMn0.Falh2B93QkxA5d9ZD0Y6NTVo9ZFsst3HTd4JEBPE01w",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/users/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/users/ - Actualizar Usuario",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjUsImlkUm9sIjoxLCJpYXQiOjE2MjY1ODU1NDcsImV4cCI6MTYyNjU4OTE0N30.vZbcLZAKd9Oz_jfZwzFbTjXEr7NaHle2RkTaBztpq3k",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"correo\": \"correo@mail.com\",\r\n    \"telefono\": \"+1 11123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/users/update",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/users/updatePassword - Actualizar Contraseña",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjUsImlkUm9sIjoxLCJpYXQiOjE2MjY1OTcyMjAsImV4cCI6MTYyNjYwMDgyMH0.alGswffFDWAXGjuXtevwT7QOvQ2R0ycCtlVJ6NP2RBA",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"claveDinamica\": 111,\r\n    \"nuevaContrasena\": \"Prueba2\"\r\n\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/users/updatePassword",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"updatePassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/users/updateRol/3?idRol=2 - Actualizar Rol de un usuario",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImlkUm9sIjoyLCJpYXQiOjE2MjY2NDgwODMsImV4cCI6MTYyNjY1MTY4M30.m_b5l8MEIiEpBpeezFGIsEkTa0cPdyKKH0FSnOtrFwE",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/users/updateRol/:idUsuario?idRol=1",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"updateRol",
+								":idUsuario"
+							],
+							"query": [
+								{
+									"key": "idRol",
+									"value": "1"
+								}
+							],
+							"variable": [
+								{
+									"key": "idUsuario",
+									"value": "2"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/users/delete - Borrar Usuario",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "contrasena",
+								"value": "admin",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/users/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"delete"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "productos",
+			"item": [
+				{
+					"name": "api/v1/products/ - Muestra todos los productos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/products/",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products/:idProducto - Muestra un producto especifico",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/products/:idProducto",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								":idProducto"
+							],
+							"variable": [
+								{
+									"key": "idProducto",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products/register - Registro Producto (Admin)",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjUsImlkUm9sIjoxLCJpYXQiOjE2MjY1OTg5MjQsImV4cCI6MTYyNjYwMjUyNH0.20cRzvtyjiGc8mM2rdWzSryhyKSMaJMYKBi-8yPni_0",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"codigo\": \"MenEje\",\r\n    \"nombre\": \"Menu Ejecutivo\",\r\n    \"descripcion\": \"Menu Ejecutivo del dia, incluye sopa y seco\",\r\n    \"precio\": 10000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/products/register",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products/1/update - Actualizacion Producto (Admin)",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjUsImlkUm9sIjoxLCJpYXQiOjE2MjY2MDEzMzgsImV4cCI6MTYyNjYwNDkzOH0.k2eiawgvQ-946HkQ0XlsT9N_Q6vWBzJH5knZCA4nUT8",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombre\": \"Menu del dia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/products/1/update",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								"1",
+								"update"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/products/:idProducto/delete?codigo= - Eliminar Producto",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjUsImlkUm9sIjoxLCJpYXQiOjE2MjY2MDI2MjgsImV4cCI6MTYyNjYwNjIyOH0.ou3ZSjEDpozDkiFSxOuADZqW9ZY35eP2GUg8esRF7D4",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/products/:idProducto/delete?codigo=",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"products",
+								":idProducto",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "codigo",
+									"value": ""
+								}
+							],
+							"variable": [
+								{
+									"key": "idProducto",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pedidos",
+			"item": [
+				{
+					"name": "orders/newOrder - Registra un nuevo pedido",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImlkUm9sIjoyLCJpYXQiOjE2MjY2NTAxNjcsImV4cCI6MTYyNjY1Mzc2N30.yQbTPWEi6t-F4-rN8mmsEiBrnjbAXn1zTTXGL9YxnoE",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idMetodoPago\": 2,\r\n    \"productos\": [\r\n        {\r\n            \"idProducto\": 1,\r\n            \"cantidad\": 2\r\n        },{\r\n            \"idProducto\": 2,\r\n            \"cantidad\": 3\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/orders/newOrder",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"newOrder"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/orders/:idPedido - Muestra un pedido en especifico hecho por un usuario",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImlkUm9sIjoyLCJpYXQiOjE2MjY2NTY0ODYsImV4cCI6MTYyNjY2MDA4Nn0.zELX1ElGSJpVHz3sFUxffujQoQ1DO_TK1jDg4hgvGGU",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/orders/:idPedido",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								":idPedido"
+							],
+							"variable": [
+								{
+									"key": "idPedido",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/orders/admin/:idPedido - Muestra pedido por Id al admin",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjEsImlkUm9sIjoxLCJpYXQiOjE2MjY2NTYxNjUsImV4cCI6MTYyNjY1OTc2NX0.1l6VMVBU_Bk-lRCKcd6OQdFdfIkdcojxUXi-QAeXyvc",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/orders/admin/:idPedido",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"admin",
+								":idPedido"
+							],
+							"variable": [
+								{
+									"key": "idPedido",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/orders - Muestra todas las ordenes ",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjEsImlkUm9sIjoxLCJpYXQiOjE2MjY2NTYxNjUsImV4cCI6MTYyNjY1OTc2NX0.1l6VMVBU_Bk-lRCKcd6OQdFdfIkdcojxUXi-QAeXyvc",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/orders",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders"
+							]
+						},
+						"description": "Si es un cliente solo le muestra las ordenes hechas por el, si es un admin le muestra todas las ordenes realizadas por los clientes"
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/orders/admin/:idPedido/updateState - Actualizar estado de un pedido",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjEsImlkUm9sIjoxLCJpYXQiOjE2MjY2NTE5MDYsImV4cCI6MTYyNjY1NTUwNn0.iKrZmbHX34RatmkzUNiSfpyJkB0CwI6hQWcFVA0kGM8",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"idEstado\": 3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/orders/admin/:idPedido/updateState",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"admin",
+								":idPedido",
+								"updateState"
+							],
+							"variable": [
+								{
+									"key": "idPedido",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "orders/:idPedido/cancel - Cancelar pedido por el cliente",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjIsImlkUm9sIjoyLCJpYXQiOjE2MjY2NTM0MzksImV4cCI6MTYyNjY1NzAzOX0.Elu_dNzyLALjkurAVnrE4XWkY81L79JQH3iyzGe8XEM",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/orders/:idPedido/cancel",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								":idPedido",
+								"cancel"
+							],
+							"variable": [
+								{
+									"key": "idPedido",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
