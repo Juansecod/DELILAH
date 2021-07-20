@@ -665,6 +665,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/API_Response"
+  /admin/:idPedido/updateState
     put:
         tags:
           - pedido
