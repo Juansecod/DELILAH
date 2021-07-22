@@ -668,43 +668,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/API_Response"
-  /admin/:idPedido/updateState:
-    put:
-        tags:
-          - pedido
-        security:
-          - ApiKeyAuth: []
-        summary: Actualizar estado del pedido
-        description: El administrador actualiza el estado en el que se encuentra el pedido
-        operationId: updateState
-        parameters:
-          - name: idPedido
-            in: path
-            required: true
-            description: Id del pedido a cancelar 
-            schema:
-              type: integer
-        requestBody:
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  idEstado:
-                    type: integer
-        responses:
-          "201":
-              description: "Pedido actualizado exitosamente"
-              content:
-                application/json:
-                  schema:
-                    $ref: "#/components/schemas/API_Response"
-          "400":
-            description: "Ha ocurrido un error"
-            content:
-              application/json:
-                schema:
-                  $ref: "#/components/schemas/API_Response"
   /orders/admin/{idPedido}/updateState:
     put:
       tags:
