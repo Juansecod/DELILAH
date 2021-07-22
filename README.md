@@ -18,7 +18,7 @@
   <p align="center">
     Proyecto que plantea la creación de un sistema de pedidos online para un restaurante. Se debe montar un REST API para interactuar con la estructura de datos diseñada para el consumo del cliente.
     <br />
-    <a href="https://github.com/Juansecode/DELILAH"><strong>Explora los documentos »</strong></a>
+    <a href="https://github.com/Juansecod/DELILAH"><strong>Explora los documentos »</strong></a>
     <br />
     <br />
     <a href="https://github.com/Juansecod/DELILAH">View Demo</a>
