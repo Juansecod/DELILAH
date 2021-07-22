@@ -17,5 +17,6 @@ router.delete('/delete', usersControllers.deleteUser);
 router.use(userMiddleware.validationAdmin);
 router.get('/', usersControllers.getUsers);
 router.put('/updateRol/:idUsuario', usersControllers.updateRol);
+router.post('/signupAdmin', usersControllers.signupUserAdmin);
 
 module.exports = router;

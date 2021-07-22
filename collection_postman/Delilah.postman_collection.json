@@ -39,6 +39,51 @@
 					"response": []
 				},
 				{
+					"name": "api/v1/users/signupAdmin - Registro Usuario Admin",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjEsImlkUm9sIjoxLCJpYXQiOjE2MjY5ODU2NTUsImV4cCI6MTYyNjk4OTI1NX0.8euDovgctbceZRGwhF1bpaMi8aHgalBBnBAufPu0gEg",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nombreUsuario\": \"administradorRegistro\", \r\n    \"nombreCompleto\": \"Administrador desde el registro\", \r\n    \"correo\": \"admin2@mail.com\", \r\n    \"telefono\": \"+1 11111232\", \r\n    \"direccion\": \"direccion admin\",\r\n    \"contrasena\": \"adminregistro\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/users/signupAdmin",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"users",
+								"signupAdmin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "api/v1/users/login - Inicio de Sesion",
 					"request": {
 						"method": "POST",

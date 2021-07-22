@@ -318,7 +318,35 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/API_Response"
-    
+  /users/signupAdmin:
+    post:
+      tags:
+        - usuario(Admin)
+      summary: Registrar Usuario administrador
+      description: Se agrega el usuario con rol administrador a la base datos, permitiendo su loggeo y accesos al apartado admin
+      operationId: crearUsuarioAdmin
+      responses:
+        "201":
+          description: Operacion realizada con exito
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: Se ha cometido un error en el procedimiento
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Usuario"
+        description: Datos para la creacion de un nuevo usuario
+        required: true
+
+
   /products:
     get:
       tags:

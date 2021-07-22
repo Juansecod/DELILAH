@@ -9,7 +9,7 @@ const signupUser = async (req, res) => {
     var { contrasena } = req.body;
     try {
     	const correoSplit1 = correo.split('@')[1];
-    	const correoSplit2 = correoSplit.split('.')[1];
+    	if(!(!correoSplit1)) { correoSplit2 = correoSplit1.split('.')[1]; }
     	if(!correoSplit1 || !correoSplit2) throw new Error ('400M');
     	if(contrasena.length < 8) throw new Error('400P');
     	contrasena = await bcrypt.hashSync(contrasena, 10);
@@ -20,7 +20,31 @@ const signupUser = async (req, res) => {
         return res.status(201).json({
             'msg': true,
             'data': `Registrado usuario: ${nombreUsuario} con exito`
-        })
+        });
+
+    } catch (error) {
+    	console.log(error)
+        errorResponse(res,error);
+    }
+};
+
+const signupUserAdmin = async (req, res) => {
+    const { nombreUsuario, nombreCompleto, correo, telefono, direccion} = req.body;
+    var { contrasena } = req.body;
+    try {
+    	const correoSplit1 = correo.split('@')[1];
+    	if(!(!correoSplit1)) { correoSplit2 = correoSplit1.split('.')[1]; };
+    	if(!correoSplit1 || !correoSplit2) throw new Error ('400M');
+    	if(contrasena.length < 8) throw new Error('400P');
+    	contrasena = await bcrypt.hashSync(contrasena, 10);
+        const resultInsertUser = await sequelize.query(`INSERT INTO usuarios(nombreUsuario, nombreCompleto, correo, telefono, direccion, contrasena, idRol)  
+        	VALUES('${nombreUsuario}', '${nombreCompleto}', '${correo}', '${telefono}', '${direccion}', '${contrasena}', 1);`,
+        	{ type: sequelize.QueryTypes.INSERT });
+
+        return res.status(201).json({
+            'msg': true,
+            'data': `Registrado usuario: ${nombreUsuario} con exito. Este usuario cuenta con el rol de Administrador`
+        });
 
     } catch (error) {
         errorResponse(res,error);
@@ -176,4 +200,4 @@ const getUsers = async (req,res) => {
 	}
 }
 
-module.exports = { signupUser, loginUser, getUser, updateUser, updatePassword, deleteUser, updateRol, getUsers };
+module.exports = { signupUser, signupUserAdmin, loginUser, getUser, updateUser, updatePassword, deleteUser, updateRol, getUsers };
