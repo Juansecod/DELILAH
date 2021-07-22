@@ -157,6 +157,7 @@ Ejemplo de la peticion mostrar usuario registrados, exclusivo para usuarios admi
   ![image](https://user-images.githubusercontent.com/62673626/126094597-403d6da1-3bbe-4781-b9b7-03cb440f4611.png)
   - En caso de ser exitoso la autorizacion de acceso nos retornara una lista con los datos de todos los usuarios registrados.
 
+Dentro del repositorio encontraras una colección completa con todas las rutas de este proyecto y con ejemplos del formato que recibe cada uno.<br /><br />
 _Para mas ejemplos, por favor importar el archivo spec.yml en [swagger](https://editor.swagger.io) para una mejor comprencion del uso de la API_
 
 
