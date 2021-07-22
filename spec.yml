@@ -24,7 +24,10 @@ tags:
   - name: producto(Admin)
     description: Operaciones de los administradores sobre los productos (Solo usuarios administrativos)
   - name: pedido
-    description: Operaciones para pedir productos
+    description: Operaciones para pedir productos y operar sobre dichos pedidos
+  - name: pedido(Admin)
+    description: Operaciones de los administradores sobre los pedidos
+
 paths:
   /users/signup:
     post:
@@ -628,7 +631,7 @@ paths:
   /orders/admin/{idPedido}:
     get:
       tags:
-        - pedido
+        - pedido(Admin)
       security:
         - ApiKeyAuth: []
       summary: Muestra las caracteristicas de un pedido mediante su id
@@ -701,7 +704,98 @@ paths:
               application/json:
                 schema:
                   $ref: "#/components/schemas/API_Response"
-  
+  /orders/admin/{idPedido}/updateState:
+    put:
+      tags:
+        - pedido(Admin)
+      security:
+        - ApiKeyAuth: []
+      summary: Actualizar el estado de un pedido
+      description: Actualiza el estado del pedido
+      operationId: actuazarEstadoPedido
+      parameters:
+        - name: idPedido
+          in: path
+          required: true
+          description: Id del pedido a actualizar 
+          schema:
+            type: integer
+      responses:
+        "201":
+            description: "Pedido actualizado exitosamente"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/API_Response"
+        "400":
+          description: "Ha ocurrido un error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  /orders/admin/{idPedido}/delete:
+    delete:
+      tags:
+      - pedido(Admin)
+      security:
+        - ApiKeyAuth: []
+      summary: Eliminacion de un pedido
+      description: Eliminacion de un pedido de la base de datos
+      operationId: eliminarPedido
+      parameters:
+        - name: idPedido
+          in: path
+          description: Id requerido para la buscar el pedido y eliminarlo
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "Pedido eliminado con exito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: "Ha ocurrido un error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "404":
+          description: "Pedido no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+  /orders/admin/delete:
+    delete:
+      tags:
+      - pedido(Admin)
+      security:
+        - ApiKeyAuth: []
+      summary: Eliminacion de todos los pedidos
+      description: Eliminacion de todos los pedidos de la base de datos siempre y cuando este se encuentra cancelado o entregado
+      operationId: eliminarPedidos
+      responses:
+        "200":
+          description: "Pedido eliminado con exito"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "400":
+          description: "Ha ocurrido un error"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
+        "404":
+          description: "Pedido no encontrado"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/API_Response"
   
 components:
   schemas:

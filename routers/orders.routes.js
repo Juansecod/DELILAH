@@ -14,6 +14,8 @@ router.get('/', ordersControllers.getOrders);
 router.use(userMiddleware.validationAdmin);
 router.get('/admin/:idPedido', ordersControllers.getOrdersById);
 router.put('/admin/:idPedido/updateState', ordersControllers.updateOrder);
+router.delete('/admin/:idPedido/delete', ordersControllers.deleteOrder);
+router.delete('/admin/delete', ordersControllers.deleteOrders);
 
 
 module.exports = router;

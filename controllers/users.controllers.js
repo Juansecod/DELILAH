@@ -8,6 +8,10 @@ const signupUser = async (req, res) => {
     const { nombreUsuario, nombreCompleto, correo, telefono, direccion} = req.body;
     var { contrasena } = req.body;
     try {
+    	const correoSplit1 = correo.split('@')[1];
+    	const correoSplit2 = correoSplit.split('.')[1];
+    	if(!correoSplit1 || !correoSplit2) throw new Error ('400M');
+    	if(contrasena.length < 8) throw new Error('400P');
     	contrasena = await bcrypt.hashSync(contrasena, 10);
         const resultInsertUser = await sequelize.query(`INSERT INTO usuarios(nombreUsuario, nombreCompleto, correo, telefono, direccion, contrasena, idRol)  
         	VALUES('${nombreUsuario}', '${nombreCompleto}', '${correo}', '${telefono}', '${direccion}', '${contrasena}', 2);`,

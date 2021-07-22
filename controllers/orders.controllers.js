@@ -127,7 +127,7 @@ const updateOrder = async (req, res) => {
     }
 }
 
-const cancelOrder = async(req,res) =>{
+const cancelOrder = async(req, res) => {
 	try {
         const resultUpdate = await sequelize.query(`UPDATE pedidos SET idEstado = 5 WHERE idPedido = ${req.params.idPedido} and idUsuario = ${req.decoded.idUsuario};`,
                 { type: sequelize.QueryTypes.UPDATE });
@@ -140,6 +140,50 @@ const cancelOrder = async(req,res) =>{
         errorResponse(res, error);
     }
 }
+
+const deleteOrder = async(req, res) => {
+    try{
+        const query = await sequelize.query(`SELECT * FROM pedidos WHERE idPedido = ${req.params.idPedido};`,
+            { type: sequelize.QueryTypes.SELECT });
+        if(!query[0]) throw new Error('404');
+        if(query[0].idEstado != 5 && query[0].idEstado != 6) throw new Error('400');
+        const resultEncargo = await sequelize.query(`DELETE FROM encargos 
+            WHERE idPedido = ${req.params.idPedido};`,
+            { type: sequelize.QueryTypes.DELETE }); 
+        const resultPedido = await sequelize.query(`DELETE FROM pedidos 
+            WHERE idPedido = ${req.params.idPedido};`,
+            { type: sequelize.QueryTypes.DELETE });
+        return res.status(200).json( {
+            'msg': true,
+            'data': `Producto eliminado con exito`
+        });
+    }catch(error){
+        errorResponse(res, error);
+    }
+}
+
+const deleteOrders = async(req, res) => {
+    try{
+        const query = await sequelize.query(`SELECT * FROM pedidos WHERE idEstado = 5 OR idEstado = 6 LIMIT 1;`,
+            { type: sequelize.QueryTypes.SELECT });
+        if(!query[0]) throw new Error('404');
+        const resultEncargo = await sequelize.query(`DELETE e
+            FROM encargos as e JOIN pedidos as p
+            ON e.idPedido = p.idPedido 
+            WHERE p.idEstado = 5 OR p.idEstado = 6;`,
+            { type: sequelize.QueryTypes.DELETE });
+        const resultPedido = await sequelize.query(`DELETE FROM pedidos 
+            WHERE idEstado = 5 OR idEstado = 6;`, 
+            { type: sequelize.QueryTypes.DELETE });
+        return res.status(200).json( {
+            'msg': true,
+            'data': `Productos eliminado con exito`
+        });
+    }catch(error){
+        errorResponse(res, error);
+    }
+}
+
 	
 
-module.exports = { createOrder, getOrders, getOrdersById, getOrdersByIdClient, updateOrder, cancelOrder };
+module.exports = { createOrder, getOrders, getOrdersById, getOrdersByIdClient, updateOrder, cancelOrder, deleteOrder, deleteOrders };

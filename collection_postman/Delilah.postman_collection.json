@@ -536,7 +536,7 @@
 			"name": "pedidos",
 			"item": [
 				{
-					"name": "orders/newOrder - Registra un nuevo pedido",
+					"name": "api/v1/orders/newOrder - Registra un nuevo pedido",
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -755,7 +755,7 @@
 					"response": []
 				},
 				{
-					"name": "orders/:idPedido/cancel - Cancelar pedido por el cliente",
+					"name": "api/v1/orders/:idPedido/cancel - Cancelar pedido por el cliente",
 					"request": {
 						"auth": {
 							"type": "apikey",
@@ -792,6 +792,91 @@
 									"key": "idPedido",
 									"value": "3"
 								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/orders/admin/:idPedido/delete -  Eliminar orden por ID",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjEsImlkUm9sIjoxLCJpYXQiOjE2MjY5Nzc0NzcsImV4cCI6MTYyNjk4MTA3N30.HC-Vvxp-hDffQmE6EgoELiVHl2g4Sa37fCSmfuP5HsU",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "localhost:3000/api/v1/orders/admin/:idPedido/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"admin",
+								":idPedido",
+								"delete"
+							],
+							"variable": [
+								{
+									"key": "idPedido",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "api/v1/orders/admin/delete - Borrar Ordenes (canceladas o entregadas)",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZFVzdWFyaW8iOjEsImlkUm9sIjoxLCJpYXQiOjE2MjY5ODAxMTEsImV4cCI6MTYyNjk4MzcxMX0.G6CD-byu6iRhJd1nrYlooSzV3C0z4x1m5_1OZyn16n0",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:3000/api/v1/orders/admin/delete",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"v1",
+								"orders",
+								"admin",
+								"delete"
 							]
 						}
 					},

@@ -16,8 +16,7 @@
     "nodemon": "^2.0.12"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "startApp": "nodemon app.js" 
+    "startApp": "nodemon app.js"
   },
   "repository": {
     "type": "git",
