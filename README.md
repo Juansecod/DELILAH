@@ -10,7 +10,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/Juansecod/DELILAH">
-    <img src="https://blog.acamica.com/content/images/2020/12/Logo_Redes--Custom-.png" alt="Logo" width="150" height="150">
+    <img src="https://innpulsacolombia.com/cemprende/sites/default/files/styles/950x/public/2021-04/acamica.png" alt="Logo" width="200px">
   </a>
 
   <h2 align="center">✔DELILAH Restó</h2>
